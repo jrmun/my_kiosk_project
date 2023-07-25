@@ -39,6 +39,7 @@ module.exports = (sequelize, DataTypes) => {
       option_id: {
         allowNull: false,
         type: DataTypes.BIGINT,
+        defaultValue: 0,
       },
       price: {
         allowNull: false,

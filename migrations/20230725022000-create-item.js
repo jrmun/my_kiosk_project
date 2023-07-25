@@ -20,6 +20,7 @@ module.exports = {
           model: "Options",
           key: "option_id",
         },
+        defaultValue: 0,
       },
       price: {
         allowNull: false,
