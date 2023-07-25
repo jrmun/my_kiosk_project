@@ -7,7 +7,7 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER,
+        type: Sequelize.BIGINT,
       },
       name: {
         allowNull: false,
@@ -15,15 +15,15 @@ module.exports = {
       },
       option_id: {
         allowNull: false,
+        type: Sequelize.BIGINT,
         references: {
           model: "Options",
           key: "option_id",
         },
-        type: Sequelize.INTEGER,
       },
       price: {
         allowNull: false,
-        type: Sequelize.INTEGER,
+        type: Sequelize.BIGINT,
       },
       type: {
         allowNull: false,
@@ -31,7 +31,7 @@ module.exports = {
       },
       amount: {
         allowNull: false,
-        type: Sequelize.INTEGER,
+        type: Sequelize.BIGINT,
       },
       createdAt: {
         allowNull: false,

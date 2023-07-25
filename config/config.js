@@ -11,7 +11,7 @@ const development = {
     timestamps: false,
   },
   logging: false,
-  // port: env.MYSQL_PORT,
+  port: env.MYSQL_PORT,
 };
 
 const production = {
