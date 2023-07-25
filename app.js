@@ -7,8 +7,6 @@ const session = require("express-session");
 const MemoryStore = require("memorystore")(session);
 const fs = require("fs");
 
-npx sequelize model:generate --name OrderCustomer --attributes order_customer_id:integer,state:integer
-
 app.use(
   session({
     secret: SESSION_SECRET_KEY,
