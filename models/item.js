@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Item extends Model {
     /**
@@ -10,19 +8,65 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      this.belongsTo(models.Options, {
+        targetKey: "option_id",
+        foreignKey: "option_id",
+      });
+
+      this.hasMany(models.OrderItem, {
+        targetKey: "item_id",
+        foreignKey: "item_id",
+      });
+
+      this.hasOne(models.ItemOrderCustomer, {
+        targetKey: "item_id",
+        foreignKey: "item_id",
+      });
     }
   }
-  Item.init({
-    item_id: DataTypes.INTEGER,
-    name: DataTypes.STRING,
-    option_id: DataTypes.INTEGER,
-    price: DataTypes.INTEGER,
-    type: DataTypes.STRING,
-    amount: DataTypes.INTEGER
-  }, {
-    sequelize,
-    modelName: 'Item',
-  });
+  Item.init(
+    {
+      item_id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: DataTypes.BIGINT,
+      },
+      name: {
+        allowNull: false,
+        type: DataTypes.STRING,
+      },
+      option_id: {
+        allowNull: false,
+        type: DataTypes.BIGINT,
+      },
+      price: {
+        allowNull: false,
+        type: DataTypes.BIGINT,
+      },
+      type: {
+        allowNull: false,
+        type: DataTypes.STRING,
+      },
+      amount: {
+        allowNull: false,
+        type: DataTypes.BIGINT,
+      },
+      createdAt: {
+        allowNull: false,
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
+      },
+      updatedAt: {
+        allowNull: false,
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
+      },
+    },
+    {
+      sequelize,
+      modelName: "Item",
+    }
+  );
   return Item;
 };
