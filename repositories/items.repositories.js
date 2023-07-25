@@ -5,6 +5,14 @@ class ItemRepository {
         return await Item.findOne({ where: data });
     };
 
+    optionFindOne = async ({ option_id }) => {
+        console.log(option_id);
+        return await Item.findOne({
+            where: { option_id: option_id },
+            include: [{ model: Option, where: { option_id: option_id } }],
+        });
+    };
+
     itemFindAll = async () => {
         return await Item.findAll();
     };
@@ -16,8 +24,11 @@ class ItemRepository {
         });
     };
 
-    updateItem = async ({ item_id, name, price, type }) => {
-        return await Item.update({ name, price, type }, { where: { item_id } });
+    updateItem = async ({ option_id, item_id, name, price, type, extra_price, shot_price, hot }) => {
+        await sequelize.transaction(async (transaction) => {
+            await Option.update({ extra_price, shot_price, hot }, { where: { option_id } });
+            await Item.update({ name, price, type }, { where: { item_id } });
+        });
     };
 
     deleteItem = async ({ item_id }) => {

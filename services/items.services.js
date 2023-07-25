@@ -10,12 +10,15 @@ class ItemService {
         });
         if (!findItemId) throw new CustomError('해당하는 아이템은 존재하지 않습니다.', 403);
 
+        const findOption = await this.itemRepository.optionFindOne({ option_id: findItemId.option_id });
         const Item = {
-            item_id: findItemId.item_id,
-            name: findItemId.name,
-            price: findItemId.price,
-            type: findItemId.type,
-            option_id: findItemId.option_id,
+            item_id: findOption.item_id,
+            name: findOption.name,
+            price: findOption.price,
+            type: findOption.type,
+            extra_price: findOption.Option.extra_price,
+            shot_price: findOption.Option.shot_price,
+            hot: findOption.Option.hot,
         };
 
         return new ServiceReturn('상품 정보를 정상적으로 전달 완료했습니다.', 200, Item);
@@ -44,14 +47,14 @@ class ItemService {
         return new ServiceReturn('상품 등록이 정상적으로 완료되었습니다.', 200);
     };
 
-    updateItem = async ({ item_id, name, price, type }) => {
+    updateItem = async ({ item_id, name, price, type, extra_price, shot_price, hot }) => {
         const findItemId = await this.itemRepository.itemFindOne({
             item_id: item_id,
         });
         if (!findItemId) throw new CustomError('해당하는 아이템은 존재하지 않습니다.', 403);
         if ((!name, !price, !type)) throw new CustomError('필수 입력 항목이 충족되지 않았습니다.', 403);
 
-        await this.itemRepository.updateItem({ item_id, name, price, type });
+        await this.itemRepository.updateItem({ option_id: findItemId.option_id, item_id, name, price, type, extra_price, shot_price, hot });
 
         return new ServiceReturn('상품 수정이 정상적으로 완료되었습니다.', 200);
     };
