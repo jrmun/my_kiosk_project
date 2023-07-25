@@ -6,7 +6,6 @@ class ItemRepository {
     };
 
     optionFindOne = async ({ option_id }) => {
-        console.log(option_id);
         return await Item.findOne({
             where: { option_id: option_id },
             include: [{ model: Option, where: { option_id: option_id } }],
@@ -31,8 +30,9 @@ class ItemRepository {
         });
     };
 
-    deleteItem = async ({ item_id }) => {
-        return await Item.destroy({ where: { item_id: item_id } });
+    deleteItem = async ({ item_id, option_id }) => {
+        await Item.destroy({ where: { item_id: item_id } });
+        await Option.destroy({ where: { option_id: option_id } });
     };
 }
 

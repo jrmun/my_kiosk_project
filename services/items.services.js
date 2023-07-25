@@ -65,7 +65,7 @@ class ItemService {
         });
         if (!findItemId) throw new CustomError('해당하는 아이템은 존재하지 않습니다.', 403);
 
-        await this.itemRepository.deleteItem({ item_id });
+        await this.itemRepository.deleteItem({ item_id, option_id: findItemId.option_id });
 
         return new ServiceReturn('상품 삭제가 정상적으로 완료되었습니다.', 200);
     };
