@@ -6,7 +6,7 @@ class ItemService {
 
     getItem = async ({ item_id }) => {
         const findItemId = await this.itemRepository.itemFindOne({
-            item_id: item_id,
+            item_id,
         });
         if (!findItemId) throw new CustomError('해당하는 아이템은 존재하지 않습니다.', 403);
 
@@ -44,14 +44,14 @@ class ItemService {
         return new ServiceReturn('상품 등록이 정상적으로 완료되었습니다.', 200);
     };
 
-    updateItem = async ({ item_id, name, price, type, extra_price, shot_price, hot }) => {
+    updateItem = async ({ item_id, name, price, type }) => {
         const findItemId = await this.itemRepository.itemFindOne({
             item_id: item_id,
         });
         if (!findItemId) throw new CustomError('해당하는 아이템은 존재하지 않습니다.', 403);
         if ((!name, !price, !type)) throw new CustomError('필수 입력 항목이 충족되지 않았습니다.', 403);
 
-        await this.itemRepository.updateItem({ item_id, name, price, type, extra_price, shot_price, hot });
+        await this.itemRepository.updateItem({ item_id, name, price, type });
 
         return new ServiceReturn('상품 수정이 정상적으로 완료되었습니다.', 200);
     };

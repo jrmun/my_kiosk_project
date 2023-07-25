@@ -1,7 +1,7 @@
 const { Item, sequelize, Option } = require('../models');
 
 class ItemRepository {
-    itemFindOne = async (data) => {
+    itemFindOne = async ({ data }) => {
         return await Item.findOne({ where: data });
     };
 
@@ -16,8 +16,8 @@ class ItemRepository {
         });
     };
 
-    updateItem = async ({ item_id, name, price, type, extra_price, shot_price, hot }) => {
-        return await Item.update({ name, price, type, option_id }, { where: { item_id } });
+    updateItem = async ({ item_id, name, price, type }) => {
+        return await Item.update({ name, price, type }, { where: { item_id } });
     };
 
     deleteItem = async ({ item_id }) => {

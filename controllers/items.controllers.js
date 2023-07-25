@@ -12,7 +12,7 @@ class ItemController {
 
             return res.status(status).json({ message, result });
         } catch (error) {
-            if (error.status) return res.status(error.status).json({ message });
+            if (error.status) return res.status(error.status).json({ message: error.message });
             return res.status(500).json({ message: '알 수 없는 오류가 발생하였습니다.' });
         }
     };
@@ -23,7 +23,7 @@ class ItemController {
 
             return res.status(status).json({ message, result });
         } catch (error) {
-            if (error.status) return res.status(error.status).json({ message });
+            if (error.status) return res.status(error.status).json({ message: error.message });
             return res.status(500).json({ message: '알 수 없는 오류가 발생하였습니다.' });
         }
     };
@@ -35,7 +35,7 @@ class ItemController {
 
             return res.status(status).json({ message, result });
         } catch (error) {
-            if (error.status) return res.status(error.status).json({ message });
+            if (error.status) return res.status(error.status).json({ message: error.message });
             console.log(error);
             return res.status(500).json({ message: '알 수 없는 오류가 발생하였습니다.' });
         }
@@ -50,14 +50,11 @@ class ItemController {
                 name,
                 price,
                 type,
-                extra_price,
-                shot_price,
-                hot,
             });
 
             return res.status(status).json({ message, result });
         } catch (error) {
-            if (error.status) return res.status(error.status).json({ message });
+            if (error.status) return res.status(error.status).json({ message: error.message });
             return res.status(500).json({ message: '알 수 없는 오류가 발생하였습니다.' });
         }
     };
@@ -71,7 +68,7 @@ class ItemController {
 
             return res.status(status).json({ message, result });
         } catch (error) {
-            if (error.status) return res.status(error.status).json({ message });
+            if (error.status) return res.status(error.status).json({ message: error.message });
             return res.status(500).json({ message: '알 수 없는 오류가 발생하였습니다.' });
         }
     };
