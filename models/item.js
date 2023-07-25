@@ -46,11 +46,12 @@ module.exports = (sequelize, DataTypes) => {
       },
       type: {
         allowNull: false,
-        type: DataTypes.STRING,
+        type: DataTypes.ENUM,
       },
       amount: {
         allowNull: false,
         type: DataTypes.BIGINT,
+        defaultValue: 0,
       },
       createdAt: {
         allowNull: false,

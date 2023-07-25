@@ -32,6 +32,7 @@ module.exports = {
       amount: {
         allowNull: false,
         type: Sequelize.BIGINT,
+        defaultValue: 0,
       },
       createdAt: {
         allowNull: false,
