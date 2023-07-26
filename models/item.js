@@ -14,12 +14,12 @@ module.exports = (sequelize, DataTypes) => {
             });
 
             this.hasMany(models.OrderItem, {
-                targetKey: 'item_id',
+                sourceKey: 'item_id',
                 foreignKey: 'item_id',
             });
 
             this.hasOne(models.ItemOrderCustomer, {
-                targetKey: 'item_id',
+                sourceKey: 'item_id',
                 foreignKey: 'item_id',
             });
         }

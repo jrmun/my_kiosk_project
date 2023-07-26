@@ -33,6 +33,7 @@ module.exports = (sequelize, DataTypes) => {
             state: {
                 allowNull: false,
                 type: DataTypes.BIGINT,
+                defaultValue: 0,
             },
             createdAt: {
                 allowNull: false,

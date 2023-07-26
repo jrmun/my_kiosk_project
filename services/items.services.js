@@ -4,10 +4,8 @@ const { CustomError, ServiceReturn } = require('../customClass');
 class ItemService {
     itemRepository = new ItemRepository();
 
-    getItem = async ({ item_id }) => {
-        const findItemId = await this.itemRepository.itemFindOne({
-            item_id,
-        });
+    getItem = async (item_id) => {
+        const findItemId = await this.itemRepository.itemFindOne(item_id);
         if (!findItemId) throw new CustomError('해당하는 아이템은 존재하지 않습니다.', 403);
 
         const findOption = await this.itemRepository.optionFindOne({ option_id: findItemId.option_id });
@@ -16,6 +14,7 @@ class ItemService {
             name: findOption.name,
             price: findOption.price,
             type: findOption.type,
+            amount: findOption.amount,
             extra_price: findOption.Option.extra_price,
             shot_price: findOption.Option.shot_price,
             hot: findOption.Option.hot,
@@ -38,7 +37,9 @@ class ItemService {
     };
 
     createItem = async ({ name, price, type, extra_price, shot_price, hot }) => {
+        console.log(name);
         const overlapName = await this.itemRepository.itemFindOne({ name: name });
+        console.log(overlapName);
         if (overlapName) throw new CustomError('같은 이름의 상품이 존재합니다.', 403);
         if ((!name, !price, !type)) throw new CustomError('필수 입력 항목이 충족되지 않았습니다.', 403);
 
