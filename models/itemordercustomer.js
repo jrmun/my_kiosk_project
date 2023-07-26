@@ -25,6 +25,7 @@ module.exports = (sequelize, DataTypes) => {
                 type: DataTypes.BIGINT,
             },
             order_customer_id: {
+                primaryKey: true,
                 allowNull: false,
                 type: DataTypes.BIGINT,
             },
