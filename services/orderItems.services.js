@@ -2,7 +2,7 @@ const OrderItemRepository = require('../repositories/orderItems.repositories');
 const ItemRepository = require('../repositories/items.repositories');
 const { CustomError, ServiceReturn } = require('../customClass');
 
-class OrderItemController {
+class OrderItemService {
     orderItemRepository = new OrderItemRepository();
     itemRepository = new ItemRepository();
 
@@ -65,4 +65,4 @@ class OrderItemController {
     };
 }
 
-module.exports = OrderItemController;
+module.exports = OrderItemService;

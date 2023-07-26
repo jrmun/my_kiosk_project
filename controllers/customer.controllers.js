@@ -17,8 +17,8 @@ class CustomerController {
 
     Order = async (req, res) => {
         try {
-            const { name, amount } = req.body;
-            const { status, message, result } = await this.coustomerService.Order(name, amount);
+            const { name, amount, hot, extra, shot } = req.body;
+            const { status, message, result } = await this.coustomerService.Order(name, amount, hot, extra, shot);
 
             return res.status(status).json({ message, result });
         } catch (error) {
