@@ -3,6 +3,17 @@ const OrderItemService = require('../services/orderItems.services');
 class OrderItemController {
     orderItemService = new OrderItemService();
 
+    getOrderList = async (req, res) => {
+        try {
+            const { status, message, result } = await this.orderItemService.getOrderList();
+
+            return res.status(status).json({ message, result });
+        } catch (error) {
+            if (error.status) return res.status(error.status).json({ message: error.message });
+            return res.status(500).json({ message: '알 수 없는 오류가 발생하였습니다.' });
+        }
+    };
+
     postOrdering = async (req, res) => {
         try {
             const item_id = req.params;
@@ -38,6 +49,7 @@ class OrderItemController {
             return res.status(status).json({ message, result });
         } catch (error) {
             if (error.status) return res.status(error.status).json({ message: error.message });
+            console.log(error);
             return res.status(500).json({ message: '알 수 없는 오류가 발생하였습니다.' });
         }
     };

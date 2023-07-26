@@ -4,6 +4,7 @@ const router = express.Router();
 const OrderItemController = require('../controllers/orderItems.controllers');
 const orderItemController = new OrderItemController();
 
+router.get('/order', orderItemController.getOrderList);
 router.post('/order/:item_id', orderItemController.postOrdering);
 router.put('/order/pending/:orderitem_id', orderItemController.orderPending);
 router.put('/order/completed/:orderitem_id', orderItemController.orderComplete);
