@@ -30,6 +30,20 @@ class CustomerRepository {
             await t.rollback();
         }
     };
+
+    undoOrder = async ({ order_customer_id }, name, amount) => {
+        const targetItem = await Item.findOne({ where: { name: name } });
+
+        const t = await sequelize.transaction();
+        try {
+            await ItemOrderCustomer.destroy({ where: { order_customer_id } }, { transaction: t });
+            await OrderCustomer.destroy({ where: { order_customer_id } }, { transaction: t });
+            await Item.update({ amount: targetItem.amount + amount }, { where: { name: name } }, { transaction: t });
+            await t.commit();
+        } catch (transactionError) {
+            await t.rollback();
+        }
+    };
 }
 
 module.exports = CustomerRepository;
