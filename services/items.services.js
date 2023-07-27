@@ -1,5 +1,6 @@
 const ItemRepository = require('../repositories/items.repositories');
 const { CustomError, ServiceReturn } = require('../customClass');
+const { checkPrimeSync } = require('crypto');
 
 class ItemService {
     itemRepository = new ItemRepository();
@@ -7,17 +8,16 @@ class ItemService {
     getItem = async (item_id) => {
         const findItemId = await this.itemRepository.itemFindOne(item_id);
         if (!findItemId) throw new CustomError('해당하는 아이템은 존재하지 않습니다.', 403);
-
         const findOption = await this.itemRepository.optionFindOne({ option_id: findItemId.option_id });
         const Item = {
             item_id: findOption.item_id,
-            name: findOption.name,
-            price: findOption.price,
-            type: findOption.type,
-            amount: findOption.amount,
-            extra_price: findOption.Option.extra_price,
-            shot_price: findOption.Option.shot_price,
-            hot: findOption.Option.hot,
+            name: findOption.Items[0].name,
+            price: findOption.Items[0].price,
+            type: findOption.Items[0].type,
+            amount: findOption.Items[0].amount,
+            extra_price: findOption.extra_price,
+            shot_price: findOption.shot_price,
+            hot: findOption.hot,
         };
 
         return new ServiceReturn('상품 정보를 정상적으로 전달 완료했습니다.', 200, Item);

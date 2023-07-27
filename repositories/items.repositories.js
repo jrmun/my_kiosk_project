@@ -2,13 +2,15 @@ const { Item, sequelize, Option } = require('../models');
 
 class ItemRepository {
     itemFindOne = async (data) => {
-        return await Item.findOne({ where: data }, { include: {} });
+        return await Item.findOne({
+            where: data,
+        });
     };
 
     optionFindOne = async ({ option_id }) => {
-        return await Item.findOne({
-            where: { option_id: option_id },
-            include: [{ model: Option, where: { option_id: option_id } }],
+        return await Option.findOne({
+            where: { option_id },
+            include: [{ model: Item }],
         });
     };
 
