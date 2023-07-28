@@ -4,7 +4,7 @@ const { Op } = require('sequelize');
 class CustomerRepository {
     getOrderList = async () => {
         const state = 0;
-        const orderList = await OrderCustomer.findOne({ state });
+        const orderList = await OrderCustomer.findOne({ where: { state } });
         return await ItemOrderCustomer.findAll({
             where: { order_customer_id: orderList.order_customer_id },
             include: [{ model: OrderCustomer }, { model: Item }],
@@ -43,14 +43,16 @@ class CustomerRepository {
     Order = async (order_customer_id) => {
         const state = 1;
         const order = await ItemOrderCustomer.findAll({
-            where: { order_customer_id: 1 },
-            include: [{ model: OrderCustomer }, { model: Item }],
+            where: { order_customer_id: order_customer_id },
         });
+
         const t = await sequelize.transaction();
         try {
             await OrderCustomer.update({ state }, { where: { order_customer_id: order_customer_id } }, { transaction: t });
             for (let i = 0; i < order.length; i++) {
-                const orderItemAmount = await ItemOrderCustomer.sum('amount', { where: { item_id: order[i].item_id } });
+                const orderItemAmount = await ItemOrderCustomer.sum('amount', {
+                    where: { [Op.and]: [{ item_id: order[i].item_id }, { order_customer_id: order_customer_id }] },
+                });
                 const targetItem = await Item.findOne({ where: { item_id: order[i].item_id } });
                 await Item.update({ amount: targetItem.amount - orderItemAmount }, { where: { item_id: order[i].item_id } }, { transaction: t });
             }

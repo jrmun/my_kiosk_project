@@ -9,7 +9,6 @@ class CustomerService {
     getOrderList = async () => {
         const findOrderList = await this.customerRepository.getOrderList();
         if (!findOrderList) throw new CustomError('회원님의 주문 내역은 존재하지 않습니다. 주문을 해주세요.', 403);
-
         const orderList = findOrderList.map((List) => {
             return {
                 name: List.Item.name,
@@ -22,6 +21,8 @@ class CustomerService {
     };
 
     orderStart = async () => {
+        const findOrder = await this.customerRepository.checkCustomer();
+        if (findOrder) throw new CustomError('주문을 시작해주세요.', 403);
         await this.customerRepository.orderStart();
         return new ServiceReturn('환영합니다. 주문을 해주세요.', 200);
     };
@@ -55,7 +56,6 @@ class CustomerService {
         if (!findOrder) throw new CustomError('회원님의 주문 내역은 존재하지 않습니다. 주문을 해주세요.', 403);
         const order_customer_id = findOrder.order_customer_id;
         await this.customerRepository.Order(order_customer_id);
-
         return new ServiceReturn('주문이 완료되었습니다.', 200);
     };
 
