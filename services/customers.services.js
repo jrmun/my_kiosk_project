@@ -40,11 +40,10 @@ class CustomerService {
 
         let price = findItem.price;
 
-        if (extra !== 0) price += findOptionItem.extra_price;
-        if (shot === 1) price += findOptionItem.shot_price;
-        if (shot === 2) price += findOptionItem.shot_price * 2;
-        if (hot === 0) price += findOptionItem.hot;
-        price *= amount;
+        if (Number(extra) !== 0) price += findOptionItem.extra_price;
+        if (Number(shot) === 1) price += findOptionItem.shot_price;
+        if (Number(shot) === 2) price += findOptionItem.shot_price * 2;
+        if (Number(hot) === 0) price += findOptionItem.hot;
 
         await this.customerRepository.putOnList(name, amount, price);
 
