@@ -6,25 +6,32 @@ class CustomerService {
     customerRepository = new CustomerRepository();
     itemRepository = new ItemRepository();
 
-    getOrderList = async (order_customer_id) => {
-        const findOrderList = await this.customerRepository.orderFindOne(order_customer_id);
+    getOrderList = async () => {
+        const findOrderList = await this.customerRepository.getOrderList();
         if (!findOrderList) throw new CustomError('회원님의 주문 내역은 존재하지 않습니다. 주문을 해주세요.', 403);
 
-        const orderList = {
-            name: findOrderList.Item.name,
-            amount: findOrderList.amount,
-            price: findOrderList.price,
-            state: findOrderList.OrderCustomer.state,
-        };
+        const orderList = findOrderList.map((List) => {
+            return {
+                name: List.Item.name,
+                amount: List.amount,
+                price: List.price * List.amount,
+            };
+        });
+
         return new ServiceReturn('주문 상세 보기입니다.', 200, orderList);
     };
 
-    Order = async (name, amount, hot, extra, shot) => {
+    orderStart = async () => {
+        await this.customerRepository.orderStart();
+        return new ServiceReturn('환영합니다. 주문을 해주세요.', 200);
+    };
+
+    putOnList = async (name, amount, hot, extra, shot) => {
         const findItem = await this.itemRepository.itemFindOne({ name });
         if (!findItem) throw new CustomError('존재하지 않는 메뉴입니다.', 403);
         if (amount > findItem.amount) throw new CustomError('재고가 충분하지 않습니다.', 403);
-        const findOptionItem = await this.itemRepository.optionFindOne({ option_id: findItem.option_id });
 
+        const findOptionItem = await this.itemRepository.optionFindOne({ option_id: findItem.option_id });
         if (findOptionItem.extra_price === 0 && Number(extra) !== 0) throw new CustomError('사이즈 업이 불가능한 상품입니다.', 403);
         if (findOptionItem.hot !== 0 && Number(hot) === 0) throw new CustomError('아이스가 불가능한 상품입니다.', 403);
         if (findOptionItem.hot === 0 && Number(hot) !== 0) throw new CustomError('핫이 불가능한 상품입니다.', 403);
@@ -38,17 +45,25 @@ class CustomerService {
         if (hot === 0) price += findOptionItem.hot;
         price *= amount;
 
-        await this.customerRepository.Order(name, amount, price);
+        await this.customerRepository.putOnList(name, amount, price);
+
+        return new ServiceReturn('주문 추가가 완료되었습니다.', 200);
+    };
+
+    Order = async () => {
+        const findOrder = await this.customerRepository.checkCustomer();
+        if (!findOrder) throw new CustomError('회원님의 주문 내역은 존재하지 않습니다. 주문을 해주세요.', 403);
+        const order_customer_id = findOrder.order_customer_id;
+        await this.customerRepository.Order(order_customer_id);
 
         return new ServiceReturn('주문이 완료되었습니다.', 200);
     };
 
-    undoOrder = async (order_customer_id) => {
-        const findOrder = await this.customerRepository.orderFindOne(order_customer_id);
+    undoOrder = async () => {
+        const findOrder = await this.customerRepository.checkCustomer();
         if (!findOrder) throw new CustomError('회원님의 주문 내역은 존재하지 않습니다. 주문을 해주세요.', 403);
-        const name = findOrder.Item.name;
-        const amount = findOrder.amount;
-        await this.customerRepository.undoOrder(order_customer_id, name, amount);
+
+        await this.customerRepository.undoOrder(findOrder.order_customer_id);
 
         return new ServiceReturn('주문 취소가 완료되었습니다.', 200);
     };
