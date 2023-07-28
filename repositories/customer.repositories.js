@@ -82,6 +82,24 @@ class CustomerRepository {
 
     //주문 취소 시 주문자 Id, 장바구니내의 아이템들이 삭제처리 됨
     undoOrder = async (order_customer_id) => {
+        const order = await ItemOrderCustomer.findAll({
+            where: { order_customer_id: order_customer_id },
+        });
+
+        const t = await sequelize.transaction();
+        try {
+            for (let i = 0; i < order.length; i++) {
+                const orderItemAmount = await ItemOrderCustomer.sum('amount', {
+                    where: { [Op.and]: [{ item_id: order[i].item_id }, { order_customer_id: order_customer_id }] },
+                });
+                const targetItem = await Item.findOne({ where: { item_id: order[i].item_id } });
+                await Item.update({ amount: targetItem.amount + orderItemAmount }, { where: { item_id: order[i].item_id } }, { transaction: t });
+            }
+        } catch (transactionError) {
+            await t.rollback();
+            return console.log(transactionError);
+        }
+
         await ItemOrderCustomer.destroy({
             where: { order_customer_id: order_customer_id },
         });
