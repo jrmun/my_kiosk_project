@@ -70,11 +70,19 @@ class CustomerRepository {
             return console.log(transactionError);
         }
     };
-    //주문 취소 시 state(상태)가 4로 변경되면서 주문 취소됨.
-    undoOrder = async (order_customer_id) => {
-        const state = 4;
-        await OrderCustomer.update({ state }, { where: { order_customer_id: order_customer_id } });
+    //장바구니 삭제 시 장바구니 내의 아이템이 삭제됨
+    deleteList = async (order_customer_id) => {
         await ItemOrderCustomer.destroy({
+            where: { order_customer_id: order_customer_id },
+        });
+    };
+
+    //주문 취소 시 주문자 Id, 장바구니내의 아이템들이 삭제처리 됨
+    undoOrder = async (order_customer_id) => {
+        await ItemOrderCustomer.destroy({
+            where: { order_customer_id: order_customer_id },
+        });
+        await OrderCustomer.destroy({
             where: { order_customer_id: order_customer_id },
         });
     };
