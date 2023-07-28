@@ -1,4 +1,4 @@
-const { Item, sequelize, OrderCustomer, ItemOrderCustomer, Option } = require('../models');
+const { Item, sequelize, OrderCustomer, ItemOrderCustomer } = require('../models');
 const { Transaction } = require('sequelize');
 const { Op } = require('sequelize');
 class CustomerRepository {
@@ -11,16 +11,18 @@ class CustomerRepository {
             include: [{ model: OrderCustomer }, { model: Item }],
         });
     };
+
     //현재 state(0)가 0인지 확인 0이 아닐 경우 스타트를 먼저 시작해야함
     checkCustomer = async () => {
-        const state = 0;
         return await OrderCustomer.findOne({ where: { state: 0 } });
     };
+
     // 키오스크 스타트 버튼처럼 시작API를 실행하면 state(상태)가 0됨.
     orderStart = async () => {
         const state = 0;
         return await OrderCustomer.create({ state });
     };
+
     //주문 아이디에 주문 내용들을 저장 Order()에서 저장된 내용이 전부 구매되도록 함
     putOnList = async (name, amount, price) => {
         const targetItem = await Item.findOne({ where: { name: name } });
@@ -70,6 +72,7 @@ class CustomerRepository {
             return console.log(transactionError);
         }
     };
+
     //장바구니 삭제 시 장바구니 내의 아이템이 삭제됨
     deleteList = async (order_customer_id) => {
         await ItemOrderCustomer.destroy({
