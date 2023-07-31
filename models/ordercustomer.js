@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
          * The `models/index` file will call this method automatically.
          */
         static associate(models) {
-            this.hasOne(models.OrderCustomer, {
+            this.hasOne(models.ItemOrderCustomer, {
                 targetKey: 'order_customer_id',
                 foreignKey: 'order_customer_id',
             });
