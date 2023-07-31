@@ -26,6 +26,14 @@ class SellerService {
         await this.sellerRepository.ordercheck(order_customer_id);
         return new ServiceReturn('주문 확인이 완료되었습니다.', 200);
     };
+
+    completeOrder = async (order_customer_id) => {
+        console.log(order_customer_id);
+        const findOrder = await this.sellerRepository.findOrder(order_customer_id);
+        if (findOrder) throw new CustomError('해당 주문 도착이 없습니다.', 403);
+        await this.sellerRepository.completeOrder(order_customer_id);
+        return new ServiceReturn('고객께서 음식을 수령해갔습니다.', 200);
+    };
 }
 
 module.exports = SellerService;
