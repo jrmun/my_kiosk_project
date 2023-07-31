@@ -30,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
                 allowNull: false,
                 type: DataTypes.BIGINT,
             },
-            hot: {
+            ice: {
                 allowNull: false,
                 type: DataTypes.BIGINT,
             },

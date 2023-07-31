@@ -18,16 +18,16 @@ class ItemRepository {
         return await Item.findAll();
     };
 
-    createItem = async ({ name, price, type, extra_price, shot_price, hot }) => {
+    createItem = async ({ name, price, type, extra_price, shot_price, ice }) => {
         await sequelize.transaction(async (transaction) => {
-            const optionCreate = await Option.create({ extra_price, shot_price, hot }, { transaction });
+            const optionCreate = await Option.create({ extra_price, shot_price, ice }, { transaction });
             await Item.create({ name, price, type, option_id: optionCreate.option_id }, { transaction });
         });
     };
 
-    updateItem = async ({ option_id, item_id, name, price, type, extra_price, shot_price, hot }) => {
+    updateItem = async ({ option_id, item_id, name, price, type, extra_price, shot_price, ice }) => {
         await sequelize.transaction(async (transaction) => {
-            await Option.update({ extra_price, shot_price, hot }, { where: { option_id } }, { transaction });
+            await Option.update({ extra_price, shot_price, ice }, { where: { option_id } }, { transaction });
             await Item.update({ name, price, type }, { where: { item_id } }, { transaction });
         });
     };

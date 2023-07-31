@@ -23,6 +23,18 @@ module.exports = {
                 allowNull: false,
                 type: Sequelize.BIGINT,
             },
+            ice: {
+                allowNull: false,
+                type: Sequelize.BIGINT,
+            },
+            shot: {
+                allowNull: false,
+                type: Sequelize.BIGINT,
+            },
+            extra: {
+                allowNull: false,
+                type: Sequelize.BIGINT,
+            },
             price: {
                 allowNull: false,
                 type: Sequelize.BIGINT,

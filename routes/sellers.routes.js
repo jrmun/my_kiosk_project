@@ -5,7 +5,7 @@ const Sellercontroller = require('../controllers/sellers.controllers');
 const sellercontroller = new Sellercontroller();
 
 router.get('/sellers/orderlist', sellercontroller.getOrderList);
-router.get('');
+router.get('/sellers/repair', sellercontroller.orderRepair); //판매 내역 확인
 router.put('/sellers/ordercheck/:order_customer_id', sellercontroller.ordercheck);
 router.put('/sellers/completeorder/:order_customer_id', sellercontroller.completeOrder);
 

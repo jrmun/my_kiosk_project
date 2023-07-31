@@ -5,7 +5,8 @@ class SellerService {
     sellerRepository = new SellerRepository();
 
     getOrderList = async () => {
-        const findOrderList = await this.sellerRepository.getOrderListId();
+        const state = 1;
+        const findOrderList = await this.sellerRepository.getOrderListId(state);
         const List = findOrderList.map((List) => {
             return {
                 order_customer_id: List.order_customer_id,
@@ -16,7 +17,23 @@ class SellerService {
                 hot: List.ItemOrderCustomer.Item.Option.hot_price,
             };
         });
-        return new ServiceReturn('테스트 중', 200, List);
+        return new ServiceReturn('현재 주문 내역입니다.', 200, List);
+    };
+
+    orderRepair = async () => {
+        const state = 3;
+        const findOrderList = await this.sellerRepository.getOrderListId(state);
+        const List = findOrderList.map((List) => {
+            return {
+                order_customer_id: List.order_customer_id,
+                name: List.ItemOrderCustomer.Item.name,
+                amount: List.ItemOrderCustomer.amount,
+                extra: List.ItemOrderCustomer.Item.Option.extra_price,
+                shot: List.ItemOrderCustomer.Item.Option.shot_price,
+                hot: List.ItemOrderCustomer.Item.Option.hot_price,
+            };
+        });
+        return new ServiceReturn('판매 내역입니다.', 200, List);
     };
 
     ordercheck = async (order_customer_id) => {

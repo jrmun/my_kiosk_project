@@ -17,7 +17,7 @@ class ItemService {
             amount: findOption.Items[0].amount,
             extra_price: findOption.extra_price,
             shot_price: findOption.shot_price,
-            hot: findOption.hot,
+            ice: findOption.ice,
         };
 
         return new ServiceReturn('상품 정보를 정상적으로 전달 완료했습니다.', 200, Item);
@@ -36,26 +36,24 @@ class ItemService {
         return new ServiceReturn('상품 리스트를 성공적으로 불러왔습니다.', 200, itemList);
     };
 
-    createItem = async ({ name, price, type, extra_price, shot_price, hot }) => {
-        console.log(name);
+    createItem = async ({ name, price, type, extra_price, shot_price, ice }) => {
         const overlapName = await this.itemRepository.itemFindOne({ name: name });
-        console.log(overlapName);
         if (overlapName) throw new CustomError('같은 이름의 상품이 존재합니다.', 403);
         if ((!name, !price, !type)) throw new CustomError('필수 입력 항목이 충족되지 않았습니다.', 403);
 
-        await this.itemRepository.createItem({ name, price, type, extra_price, shot_price, hot });
+        await this.itemRepository.createItem({ name, price, type, extra_price, shot_price, ice });
 
         return new ServiceReturn('상품 등록이 정상적으로 완료되었습니다.', 200);
     };
 
-    updateItem = async ({ item_id, name, price, type, extra_price, shot_price, hot }) => {
+    updateItem = async ({ item_id, name, price, type, extra_price, shot_price, ice }) => {
         const findItemId = await this.itemRepository.itemFindOne({
             item_id: item_id,
         });
         if (!findItemId) throw new CustomError('해당하는 아이템은 존재하지 않습니다.', 403);
         if ((!name, !price, !type)) throw new CustomError('필수 입력 항목이 충족되지 않았습니다.', 403);
 
-        await this.itemRepository.updateItem({ option_id: findItemId.option_id, item_id, name, price, type, extra_price, shot_price, hot });
+        await this.itemRepository.updateItem({ option_id: findItemId.option_id, item_id, name, price, type, extra_price, shot_price, ice });
 
         return new ServiceReturn('상품 수정이 정상적으로 완료되었습니다.', 200);
     };

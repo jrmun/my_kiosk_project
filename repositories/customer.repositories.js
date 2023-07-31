@@ -18,18 +18,25 @@ class CustomerRepository {
     };
 
     // 키오스크 스타트 버튼처럼 시작API를 실행하면 state(상태)가 0됨.
-    orderStart = async () => {
-        const state = 0;
+    orderStart = async (state) => {
         return await OrderCustomer.create({ state });
     };
 
     //주문 아이디에 주문 내용들을 저장 Order()에서 저장된 내용이 전부 구매되도록 함
-    putOnList = async (name, amount, price) => {
+    putOnList = async (name, amount, ice, extra, shot, price) => {
         const targetItem = await Item.findOne({ where: { name: name } });
         const orderCustomer = await OrderCustomer.findOne({ where: { state: 0 } });
         //아이템을 넣을 때 아이템이 이미 장바구니에 존재하는 지를 확인
         const dupleItem = await ItemOrderCustomer.findOne({
-            where: { [Op.and]: [{ item_id: targetItem.item_id }, { order_customer_id: orderCustomer.order_customer_id }, { price: price }] },
+            where: {
+                [Op.and]: [
+                    { item_id: targetItem.item_id },
+                    { order_customer_id: orderCustomer.order_customer_id },
+                    { ice: ice },
+                    { shot: shot },
+                    { extra: extra },
+                ],
+            },
         });
         //중복 아이템이 있다면 중복아이템에 추가 수량을 update해줌
         if (dupleItem) {
@@ -38,7 +45,7 @@ class CustomerRepository {
                     amount: dupleItem.amount + Number(amount),
                 },
                 {
-                    where: { [Op.and]: [{ item_id: targetItem.item_id }, { order_customer_id: orderCustomer.order_customer_id }, { price: price }] },
+                    where: { [Op.and]: [{ item_id: targetItem.item_id }, { order_customer_id: orderCustomer.order_customer_id }] },
                 }
             );
         } else {
@@ -46,13 +53,15 @@ class CustomerRepository {
                 item_id: targetItem.item_id,
                 order_customer_id: orderCustomer.order_customer_id,
                 amount: amount,
+                ice: ice,
+                shot: shot,
+                extra: extra,
                 price: price,
             });
         }
     };
     //주문 접수 시 state(상태)가 1로 변경되면서 주문 접수 완료 처리
-    Order = async (order_customer_id) => {
-        const state = 1;
+    Order = async (state, order_customer_id) => {
         const order = await ItemOrderCustomer.findAll({
             where: { order_customer_id: order_customer_id },
         });
