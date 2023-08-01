@@ -22,6 +22,7 @@ class SellerService {
     };
 
     orderRepair = async () => {
+        setTimeout(() => console.log('타임아웃'), 5000);
         const state = 3;
         const findOrderList = await this.sellerRepository.getOrderListId(state);
         const List = findOrderList.map((List) => {

@@ -28,6 +28,12 @@ class CustomerService {
         if (findOrder) throw new CustomError('이제 주문을 시작해주세요.', 403);
         const state = 0;
         await this.customerRepository.orderStart(state);
+        setTimeout(async () => {
+            const findOrder = await this.customerRepository.checkCustomer();
+            if (findOrder) {
+                await this.undoOrder();
+            }
+        }, 600000);
         return new ServiceReturn('환영합니다. 주문을 해주세요.', 200);
     };
 
