@@ -29,8 +29,8 @@ class ItemController {
 
     createItem = async (req, res) => {
         try {
-            const { name, price, type, extra_price, shot_price, ice } = req.body;
-            const { status, message, result } = await this.itemService.createItem({ name, price, type, extra_price, shot_price, ice });
+            const { name, price, type } = req.body;
+            const { status, message, result } = await this.itemService.createItem({ name, price, type });
 
             return res.status(status).json({ message, result });
         } catch (error) {
@@ -43,15 +43,12 @@ class ItemController {
     updateItem = async (req, res) => {
         try {
             const { item_id } = req.params;
-            const { name, price, type, extra_price, shot_price, ice } = req.body;
+            const { name, price, type } = req.body;
             const { status, message, result } = await this.itemService.updateItem({
                 item_id,
                 name,
                 price,
                 type,
-                extra_price,
-                shot_price,
-                ice,
             });
 
             return res.status(status).json({ message, result });
@@ -61,16 +58,26 @@ class ItemController {
         }
     };
 
-    deleteItem = async (req, res) => {
+    deleteItemcheck = async (req, res) => {
         try {
             const { item_id } = req.params;
-            const { status, message, result } = await this.itemService.deleteItem({
+            const { answer } = req.body;
+            console.log(answer);
+            if (answer) {
+                const { status, message, result } = await this.itemService.deleteItemcheck({
+                    item_id,
+                    answer,
+                });
+                return res.status(status).json({ message, result });
+            }
+
+            const { status, message, result } = await this.itemService.deleteItemcheck({
                 item_id,
             });
-
             return res.status(status).json({ message, result });
         } catch (error) {
             if (error.status) return res.status(error.status).json({ message: error.message });
+            console.log(error);
             return res.status(500).json({ message: '알 수 없는 오류가 발생하였습니다.' });
         }
     };

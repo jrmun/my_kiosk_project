@@ -9,7 +9,6 @@ class CustomerService {
     getOrderList = async () => {
         const findOrderList = await this.customerRepository.getOrderList();
         if (!findOrderList) throw new CustomError('회원님의 주문 내역은 존재하지 않습니다. 주문을 해주세요.', 403);
-        console.log(findOrderList);
         const orderList = findOrderList.map((List) => {
             return {
                 name: List.Item.name,
