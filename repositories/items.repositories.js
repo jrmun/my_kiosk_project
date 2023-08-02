@@ -28,9 +28,8 @@ class ItemRepository {
         });
     };
 
-    deleteItem = async ({ item_id, option_id }) => {
+    deleteItem = async ({ item_id }) => {
         await Item.destroy({ where: { item_id: item_id } });
-        await Option.destroy({ where: { option_id: option_id } });
     };
 }
 

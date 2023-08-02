@@ -62,7 +62,6 @@ class ItemController {
         try {
             const { item_id } = req.params;
             const { answer } = req.body;
-            console.log(answer);
             if (answer) {
                 const { status, message, result } = await this.itemService.deleteItemcheck({
                     item_id,

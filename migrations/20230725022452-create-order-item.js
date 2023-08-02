@@ -15,6 +15,7 @@ module.exports = {
                     model: 'Items',
                     key: 'item_id',
                 },
+                onDelete: 'CASCADE',
                 type: Sequelize.BIGINT,
             },
             amount: {

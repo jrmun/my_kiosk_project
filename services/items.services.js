@@ -70,7 +70,7 @@ class ItemService {
         if (findItemId.amount !== 0 && answer === '예') return await this.itemRepository.deleteItem({ item_id, option_id: findItemId.option_id });
         if (findItemId.amount !== 0) return new ServiceReturn('삭제하려는 상품의 재고가 남아있습니다. 정말로 삭제하시겠습니까?', 200, findItemId);
 
-        await this.itemRepository.deleteItem({ item_id, option_id: findItemId.option_id });
+        await this.itemRepository.deleteItem({ item_id });
         return new ServiceReturn('상품 삭제가 정상적으로 완료되었습니다.', 200);
     };
 }

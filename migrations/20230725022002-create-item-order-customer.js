@@ -9,6 +9,7 @@ module.exports = {
                     model: 'Items',
                     key: 'item_id',
                 },
+                onDelete: 'CASCADE',
                 type: Sequelize.BIGINT,
             },
             order_customer_id: {
@@ -18,6 +19,7 @@ module.exports = {
                     model: 'OrderCustomers',
                     key: 'order_customer_id',
                 },
+                onDelete: 'CASCADE',
             },
             amount: {
                 allowNull: false,

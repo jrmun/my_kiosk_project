@@ -20,6 +20,7 @@ module.exports = {
                     model: 'Options',
                     key: 'option_id',
                 },
+                onDelete: 'CASCADE',
                 defaultValue: 0,
             },
             price: {
