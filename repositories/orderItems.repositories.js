@@ -1,5 +1,4 @@
-const { CustomError } = require('../customClass');
-const { Item, sequelize, OrderItem } = require('../models');
+import { Item, sequelize, OrderItem } from '../models';
 
 class OrderItemRepository {
     orderFindOne = async (orderitem_id) => {

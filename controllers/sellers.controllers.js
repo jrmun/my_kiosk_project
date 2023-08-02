@@ -1,4 +1,4 @@
-const SellerService = require('../services/sellers.services.js');
+import SellerService from '../services/sellers.services.js';
 
 class SellerController {
     sellerService = new SellerService();

@@ -1,5 +1,5 @@
-const SellerRepository = require('../repositories/sellers.repositories');
-const { CustomError, ServiceReturn } = require('../customClass');
+import SellerRepository from '../repositories/sellers.repositories';
+import { CustomError, ServiceReturn } from '../customClass';
 
 class SellerService {
     sellerRepository = new SellerRepository();
@@ -22,7 +22,6 @@ class SellerService {
     };
 
     orderRepair = async () => {
-        setTimeout(() => console.log('타임아웃'), 5000);
         const state = 3;
         const findOrderList = await this.sellerRepository.getOrderListId(state);
         const List = findOrderList.map((List) => {

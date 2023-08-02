@@ -1,7 +1,7 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
 
-const OptionController = require('../controllers/options.controllers');
+import OptionController from '../controllers/options.controllers';
 const optionController = new OptionController();
 
 router.post('/options', optionController.createOption);

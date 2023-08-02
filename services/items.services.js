@@ -1,5 +1,5 @@
-const ItemRepository = require('../repositories/items.repositories');
-const { CustomError, ServiceReturn } = require('../customClass');
+import ItemRepository from '../repositories/items.repositories';
+import { CustomError, ServiceReturn } from '../customClass';
 
 class ItemService {
     itemRepository = new ItemRepository();

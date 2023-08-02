@@ -1,6 +1,5 @@
-const { Item, sequelize, OrderCustomer, ItemOrderCustomer } = require('../models');
-const { Transaction } = require('sequelize');
-const { Op } = require('sequelize');
+import { Op } from 'sequelize';
+import { Item, sequelize, OrderCustomer, ItemOrderCustomer } from '../models';
 class CustomerRepository {
     //현재 장바구니에 넣어 놓은 아이템들을 보여줌
     getOrderList = async () => {

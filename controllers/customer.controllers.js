@@ -1,11 +1,11 @@
-const CoustomerService = require('../services/customers.services');
+import CustomerService from '../services/customers.services';
 
 class CustomerController {
-    coustomerService = new CoustomerService();
+    customerService = new CustomerService();
 
     getOrderlist = async (req, res) => {
         try {
-            const { status, message, result } = await this.coustomerService.getOrderList();
+            const { status, message, result } = await this.customerService.getOrderList();
             return res.status(status).json({ message, result });
         } catch (error) {
             if (error.status) return res.status(error.status).json({ message: error.message });
@@ -16,7 +16,7 @@ class CustomerController {
 
     orderStart = async (req, res) => {
         try {
-            const { status, message, result } = await this.coustomerService.orderStart();
+            const { status, message, result } = await this.customerService.orderStart();
             return res.status(status).json({ message, result });
         } catch (error) {
             if (error.status) return res.status(error.status).json({ message: error.message });
@@ -28,7 +28,7 @@ class CustomerController {
     putOnList = async (req, res) => {
         try {
             const { name, amount, ice, extra, shot } = req.body;
-            const { status, message, result } = await this.coustomerService.putOnList(name, amount, ice, extra, shot);
+            const { status, message, result } = await this.customerService.putOnList(name, amount, ice, extra, shot);
             return res.status(status).json({ message, result });
         } catch (error) {
             if (error.status) return res.status(error.status).json({ message: error.message });
@@ -39,7 +39,7 @@ class CustomerController {
 
     Order = async (req, res) => {
         try {
-            const { status, message, result } = await this.coustomerService.Order();
+            const { status, message, result } = await this.customerService.Order();
             return res.status(status).json({ message, result });
         } catch (error) {
             if (error.status) return res.status(error.status).json({ message: error.message });
@@ -50,7 +50,7 @@ class CustomerController {
 
     deleteList = async (req, res) => {
         try {
-            const { status, message, result } = await this.coustomerService.deleteList();
+            const { status, message, result } = await this.customerService.deleteList();
 
             return res.status(status).json({ message, result });
         } catch (error) {
@@ -62,7 +62,7 @@ class CustomerController {
 
     undoOrder = async (req, res) => {
         try {
-            const { status, message, result } = await this.coustomerService.undoOrder();
+            const { status, message, result } = await this.customerService.undoOrder();
             return res.status(status).json({ message, result });
         } catch (error) {
             if (error.status) return res.status(error.status).json({ message: error.message });

@@ -1,5 +1,4 @@
-const { Option } = require('../models');
-const option = require('../models/option');
+import { Option } from '../models';
 
 class OptionRepository {
     optionFindOne = async ({ option_id }) => {

@@ -1,4 +1,4 @@
-const OptionService = require('../services/options.services');
+import OptionService from '../services/options.services';
 
 class OptionController {
     optionService = new OptionService();

@@ -1,6 +1,5 @@
-const OptionRepository = require('../repositories/options.repositories');
-const { CustomError, ServiceReturn } = require('../customClass');
-const { Model } = require('sequelize');
+import OptionRepository from '../repositories/options.repositories';
+import { CustomError, ServiceReturn } from '../customClass';
 
 class OptionService {
     optionRepository = new OptionRepository();

@@ -1,5 +1,4 @@
-const { Item, sequelize, Option } = require('../models');
-
+import { Item, sequelize, Option } from '../models';
 class ItemRepository {
     itemFindOne = async (data) => {
         return await Item.findOne({

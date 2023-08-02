@@ -1,4 +1,4 @@
-const { Item, sequelize, OrderCustomer, ItemOrderCustomer, Option } = require('../models');
+import { Item, OrderCustomer, ItemOrderCustomer } from '../models';
 
 class SellerRepository {
     getOrderListId = async (state) => {

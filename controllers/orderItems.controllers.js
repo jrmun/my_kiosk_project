@@ -1,4 +1,4 @@
-const OrderItemService = require('../services/orderItems.services');
+import OrderItemService from '../services/orderItems.services.js';
 
 class OrderItemController {
     orderItemService = new OrderItemService();

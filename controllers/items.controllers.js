@@ -1,4 +1,4 @@
-const ItemService = require('../services/items.services');
+import ItemService from '../services/items.services';
 
 class ItemController {
     itemService = new ItemService();
